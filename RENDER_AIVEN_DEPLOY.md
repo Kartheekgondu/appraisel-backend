@@ -35,3 +35,16 @@ Render automatically supplies `PORT`; do not add `SERVER_PORT`.
 - Revoke and replace any Gmail App Password or database password previously pasted into chat/logs.
 - `ddl-auto=update` is retained for this app. For production, use schema migrations (Flyway/Liquibase) before scaling.
 - This package was updated for environment-based DB/mail configuration and Render's PORT expansion. A successful live deployment still requires valid Aiven credentials/network access.
+
+## Troubleshooting: "Unable to determine Dialect without JDBC metadata"
+This error is Hibernate's way of saying **the database connection failed at startup**. Scroll up in the Render logs
+to the first `HikariPool` / `Communications link failure` / `Access denied` line to see the real reason. Common causes:
+1. `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME` or `SPRING_DATASOURCE_PASSWORD` is missing in Render -> Environment
+   (the app then falls back to `localhost`, which does not exist on Render). This version stops with a clear message in that case.
+2. Wrong Aiven host/port (use the **port shown by Aiven**, not necessarily 3306).
+3. Aiven IP allow-list blocks Render, or the Aiven service is powered off.
+4. The database name in the URL does not exist in Aiven (Aiven default is `defaultdb`; create `appraisel_db` or use `defaultdb`).
+5. Wrong password. Re-copy it; no quotes or spaces.
+
+This version also accepts Aiven's "Service URI" (`mysql://user:pass@host:port/db?ssl-mode=REQUIRED`) pasted directly into
+`SPRING_DATASOURCE_URL` and converts it to a JDBC URL automatically.

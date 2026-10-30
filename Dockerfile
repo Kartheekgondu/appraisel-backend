@@ -11,4 +11,4 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 10000
 # Shell form expands Render's PORT environment variable at container startup.
-ENTRYPOINT ["sh", "-c", "exec java -Dserver.port=${PORT:-10000} -jar /app/app.jar"]
+ENTRYPOINT ["sh", "-c", "exec java -XX:MaxRAMPercentage=70 -Dserver.port=${PORT:-10000} -jar /app/app.jar"]
