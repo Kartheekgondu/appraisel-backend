@@ -58,6 +58,12 @@ public class AppraisalController {
         return ResponseEntity.status(201).body(appraisalMapper.toResponse(saved));
     }
 
+    // Search returns at most 50 matching records; the frontend does not load the full table.
+    @GetMapping("/search")
+    public List<AppraisalResponse> search(@RequestParam("q") String query) {
+        return appraisalService.search(query).stream().map(appraisalMapper::toResponse).toList();
+    }
+
     @GetMapping
     public List<AppraisalResponse> getAll() {
         return appraisalService.getAll().stream().map(appraisalMapper::toResponse).toList();

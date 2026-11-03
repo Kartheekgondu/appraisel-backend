@@ -7,6 +7,7 @@ import java.time.LocalDate;
 public record AppraisalResponse(
     Long id,
     String employeeName,
+    String employeeId,
     String employeeEmail,
     String designation,
     String department,

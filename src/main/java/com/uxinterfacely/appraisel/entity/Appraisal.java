@@ -13,6 +13,8 @@ public class Appraisal {
     private Long id;
 
     private String employeeName;
+    @Column(length = 100)
+    private String employeeId;
     @Column(length = 254)
     private String employeeEmail;
     private String designation;
@@ -53,6 +55,10 @@ public class Appraisal {
     public void setEmployeeName(String employeeName) {
         this.employeeName = employeeName;
     }
+
+    public String getEmployeeId() { return employeeId; }
+
+    public void setEmployeeId(String employeeId) { this.employeeId = employeeId; }
 
     public String getEmployeeEmail() {
         return employeeEmail;

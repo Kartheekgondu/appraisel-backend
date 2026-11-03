@@ -13,6 +13,7 @@ public class AppraisalMapper {
         Appraisal appraisal = new Appraisal();
 
         appraisal.setEmployeeName(request.employeeName());
+        appraisal.setEmployeeId(request.employeeId());
         appraisal.setEmployeeEmail(request.employeeEmail());
         appraisal.setDesignation(request.designation());
         appraisal.setDepartment(request.department());
@@ -31,6 +32,7 @@ public class AppraisalMapper {
         return new AppraisalResponse(
             appraisal.getId(),
             appraisal.getEmployeeName(),
+            appraisal.getEmployeeId(),
             appraisal.getEmployeeEmail(),
             appraisal.getDesignation(),
             appraisal.getDepartment(),

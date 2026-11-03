@@ -135,6 +135,8 @@ public class PdfGenerationService {
             addDetail(details,
                     "Employee Name: " + safe(a.getEmployeeName()), body);
             addDetail(details,
+                    "Employee ID: " + safe(a.getEmployeeId()), body);
+            addDetail(details,
                     "Designation: " + safe(a.getDesignation()), body);
             addDetail(details,
                     "Department: " + safe(a.getDepartment()), body);
@@ -451,8 +453,16 @@ public class PdfGenerationService {
     }
 
     private String safe(String value) {
-        return value == null || value.isBlank()
-                ? "[Not provided]"
-                : value;
+        if (value == null || value.isBlank()) {
+            return "[Not provided]";
+        }
+
+        // Prevent escaped newline sequences from appearing literally in PDFs.
+        return value.replace("\\n", " ")
+                .replace("\\r", " ")
+                .replace("\n", " ")
+                .replace("\r", " ")
+                .replaceAll("\\s+", " ")
+                .trim();
     }
 }
