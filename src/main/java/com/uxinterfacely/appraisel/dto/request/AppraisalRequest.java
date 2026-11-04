@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public record AppraisalRequest(
     @NotBlank
     @Size(max = 100)
-    @Pattern(regexp = "^[A-Za-z]+(?: [A-Za-z]+)*$", message = "Employee Name must start with an English letter; use single spaces only between names")
+    @Pattern(regexp = "^[A-Za-z]+(?: [A-Za-z]+)*$", message = "Employee Name must start with an English letter and contain only one space between words")
     String employeeName,
     @NotBlank String employeeId,
     @NotBlank @Email String employeeEmail,
