@@ -8,17 +8,21 @@ import com.uxinterfacely.appraisel.service.AppraisalService;
 import com.uxinterfacely.appraisel.service.PdfGenerationService;
 import com.uxinterfacely.appraisel.service.SalaryCalculationService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@Validated
 @RequestMapping("/api/appraisels")
 public class AppraisalController {
 
@@ -60,7 +64,7 @@ public class AppraisalController {
 
     // Search returns at most 50 matching records; the frontend does not load the full table.
     @GetMapping("/search")
-    public List<AppraisalResponse> search(@RequestParam("q") String query) {
+    public List<AppraisalResponse> search(@RequestParam("q") @Size(min = 2, max = 60) @Pattern(regexp = "^(?!([\\s\\S])\\1+$)[\\s\\S]{2,}$") String query) {
         return appraisalService.search(query).stream().map(appraisalMapper::toResponse).toList();
     }
 

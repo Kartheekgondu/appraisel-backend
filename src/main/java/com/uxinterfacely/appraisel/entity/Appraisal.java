@@ -12,12 +12,15 @@ public class Appraisal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 60)
     private String employeeName;
-    @Column(length = 100)
+    @Column(length = 60)
     private String employeeId;
-    @Column(length = 254)
+    @Column(length = 100)
     private String employeeEmail;
+    @Column(length = 60)
     private String designation;
+    @Column(length = 60)
     private String department;
 
     @Column(precision = 15, scale = 2)
