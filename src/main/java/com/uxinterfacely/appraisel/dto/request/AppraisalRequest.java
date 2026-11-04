@@ -6,7 +6,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record AppraisalRequest(
-    @NotBlank String employeeName,
+    @NotBlank
+    @Size(max = 100)
+    @Pattern(regexp = "^[A-Za-z]+(?: [A-Za-z]+)*$", message = "Employee Name must start with an English letter; use single spaces only between names")
+    String employeeName,
     @NotBlank String employeeId,
     @NotBlank @Email String employeeEmail,
     @NotBlank String designation,
